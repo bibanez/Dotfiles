@@ -117,7 +117,7 @@
       };
     };
     programs.git = {
-      userEmail = "bibanez135@gmail.com";
+      userEmail = "personal@bibanez.xyz";
       userName = "Bernat Ibáñez";
     };
     programs.gpg = {

@@ -108,12 +108,24 @@
       git
       git-crypt
       gnupg
+      pinentry_qt
     ];
     programs.helix = {
       enable = true;
       settings = {
         theme = "gruvbox";
       };
+    };
+    programs.git = {
+      userEmail = "bibanez135@gmail.com";
+      userName = "Bernat Ibáñez";
+    };
+    programs.gpg = {
+      enable = true;
+    };
+    services.gpg-agent = {
+      enable = true;
+      pinentryFlavor = "qt";
     };
     home.stateVersion = "22.11";
   };

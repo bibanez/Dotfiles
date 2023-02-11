@@ -29,7 +29,7 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-    # Set your time zone.
+  # Set your time zone.
   time.timeZone = "Europe/Madrid";
 
   # Select internationalisation properties.
@@ -102,20 +102,26 @@
     description = "Bernat Ibáñez Martínez";
     extraGroups = [ "networkmanager" "wheel" "video" ];
   };
+  
+  fonts.fonts = with pkgs; [
+    font-awesome
+  ];
 
   # Home Manager
   home-manager.useGlobalPkgs = true;
   home-manager.users.bibanez = { pkgs, ... }: {
     home.packages = with pkgs; [
       htop
+      neofetch
       firefox
-      kate
       helix
+      rnix-lsp
       git
       git-crypt
       gnupg
       pinentry_qt
       sway
+      clipman
       wezterm
       swaynotificationcenter
       fuzzel
@@ -123,6 +129,7 @@
       playerctl
       cinnamon.nemo
       deluge
+      libreoffice
     ];
     gtk = {
       enable = true;    
@@ -169,6 +176,11 @@
             pos = "0 0";
           };
         };
+        startup = [
+          {
+            command = "exec wl-paste -t text --watch clipman store --no-persist";
+          }
+        ];
         menu = "fuzzel -t ebdbb2ff -b 282828dd -m d65d0eff -s 665c54ff -S ebdbb2ff -C d65d0eff | xargs swaymsg exec --";
         keybindings = lib.mkOptionDefault {
           "${modifier}+Escape" = "exec ${../scripts/powermenu.sh}";
@@ -192,7 +204,6 @@
           "type:keyboard" = {
             xkb_layout = "us,es";
             xkb_options = "grp:win_space_toggle";
-            #xkb_layout = "es";
           };
           "type:touchpad" = {
             tap = "enable";
@@ -227,7 +238,6 @@
             };
           }
         ];
-
       };
     };
     programs.zsh = {
@@ -277,6 +287,9 @@
   environment.systemPackages = with pkgs; [
     vim 
     wget
+
+    # Only laptop:
+    tlp
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

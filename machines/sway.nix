@@ -1,39 +1,6 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, ...}:
 
 {
-  home.packages = with pkgs; [
-    htop
-    neofetch
-    firefox
-    helix
-    rnix-lsp
-    git
-    git-crypt
-    gnupg
-    pinentry_qt
-    sway
-    clipman
-    wezterm
-    swaynotificationcenter
-    fuzzel
-    brightnessctl
-    playerctl
-    cinnamon.nemo
-    deluge
-    libreoffice
-    spotify
-  ];
-  gtk = {
-    enable = true;    
-    theme = {
-      name = "gruvbox-dark";
-      package = pkgs.gruvbox-dark-gtk;
-    };
-    iconTheme = {
-      name = "oomox-gruvbox-dark";
-      package = pkgs.gruvbox-dark-icons-gtk;
-    };
-  };
   wayland.windowManager.sway = {
     enable = true;      
     xwayland = true;
@@ -80,7 +47,7 @@
         "${modifier}+n" = "exec nemo";
         "${modifier}+t" = "exec ${../scripts/subjects.sh}";
         "${modifier}+Shift+t" = "exec nemo ~/Current";
-        
+      
         # Media
         "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
         "XF86MonBrightnessUp" = "exec brightnessctl set 5%+";
@@ -91,6 +58,9 @@
         "XF86AudioPlay" = "exec playerctl play-pause";
         "XF86AudioNext" = "exec playerctl next";
         "XF86AudioPrev" = "exec playerctl previous";
+        
+        # Notifications
+        "${modifier}+Shift+n" = "exec swaync-client -op";
       };
       input = {
         "type:keyboard" = {
@@ -130,43 +100,7 @@
           };
         }
       ];
-    };
+    }; 
+    extraConfig = "seat seat0 xcursor_theme Adwaita 24";
   };
-  programs.zsh = {
-    enable = true;
-    oh-my-zsh = {
-      enable = true;
-      plugins = [ "git" ];
-      theme = "robbyrussell";
-    };
-  };
-  programs.wezterm = {
-    enable = true;
-    extraConfig = "
-      local wezterm = require(\"wezterm\")
-      
-      return {
-        hide_tab_bar_if_only_one_tab = true,
-        color_scheme = \"GruvboxDark (Gogh)\",
-      }
-    ";
-  };
-  programs.helix = {
-    enable = true;
-    settings = {
-      theme = "gruvbox";
-    };
-  };
-  programs.git = {
-    userEmail = "personal@bibanez.xyz";
-    userName = "Bernat Ibáñez";
-  };
-  programs.gpg = {
-    enable = true;
-  };
-  services.gpg-agent = {
-    enable = true;
-    pinentryFlavor = "qt";
-  };
-  home.stateVersion = "22.11";
 }

@@ -20,7 +20,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.bibanez.imports = [ ./machines/home.nix ];
+            home-manager.users.bibanez.imports = [ ./machines/laptop.nix ];
           }
         ];
       };

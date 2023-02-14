@@ -21,6 +21,10 @@
 
   networking.hostName = "laptop"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  
+  # Virtualisation
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "bibanez" ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -49,10 +53,11 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  #services.xserver.displayManager.sddm.enable = true;
+  #services.xserver.desktopManager.plasma5.enable = true;
   #qt5.enable = true;
   #qt5.platformTheme = "gtk2";
   #qt5.style = "gtk2";
@@ -106,7 +111,37 @@
   fonts.fonts = with pkgs; [
     font-awesome
   ];
+  
+  # Syncthing
+  services.syncthing = {
+    enable = true;
+    dataDir = "/home/bibanez";
+    openDefaultPorts = true;
+    configDir = "/home/bibanez/.config/syncthing";
+    user = "bibanez";
+    group = "users";
+    guiAddress = "0.0.0.0:8384";
 
+    overrideDevices = true;
+    overrideFolders = true;
+
+    devices = {
+      "iPad" = { id = "EZVOL7N-PPJGH6Q-3UDILET-UKK3RZF-Y32JKDR-BENNQSE-PAYJJPF-FFCXZQO"; }; 
+    };
+    
+    folders = {
+      "Universitat" = {
+        path = "/home/bibanez/Universitat";
+        devices = [ "iPad" ];
+        id = "dlhva-snxn3";
+      };
+      "Llibreria" = {
+        path = "/home/bibanez/Llibreria";
+        devices = [ "iPad" ];
+        id = "gz4aq-4c6sf";
+      };
+    };
+  };
   # Home Manager
   #home-manager.useGlobalPkgs = true;
   #home-manager.users.bibanez = import ./home.nix;
@@ -119,6 +154,8 @@
   environment.systemPackages = with pkgs; [
     vim 
     wget
+    
+    syncthing
 
     # Only laptop:
     tlp

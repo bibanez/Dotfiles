@@ -44,7 +44,8 @@
       keybindings = lib.mkOptionDefault {
         "${modifier}+Escape" = "exec ${../scripts/powermenu.sh}";
         "${modifier}+b" = "exec firefox";
-        "${modifier}+n" = "exec nemo";
+        "${modifier}+p" = "exec firefox --private-window";
+        "${modifier}+n" = "exec thunar";
         "${modifier}+t" = "exec ${../scripts/subjects.sh}";
         "${modifier}+Shift+t" = "exec nemo ~/Current";
       

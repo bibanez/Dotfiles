@@ -9,6 +9,7 @@
     htop
     neofetch
     git
+    unzip
     
     # Security
     git-crypt
@@ -20,16 +21,18 @@
     deluge
     libreoffice
     spotify
-    cinnamon.nemo
     tdesktop
     thunderbird
     nicotine-plus
     lollypop
     zathura
+    todoist-electron
+    xfce.thunar
 
     # Editor
-    helix
     rnix-lsp
+    joplin
+    joplin-desktop
     
     # Desktop
     sway
@@ -70,11 +73,14 @@
     # };
   };
 
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+  
   programs.zsh = {
     enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = [ "git" "poetry" ];
       theme = "robbyrussell";
     };
   };
@@ -117,7 +123,21 @@
   
   programs.zathura = {
     enable = true;
-    
+    options = {
+      selection-clipboard = "clipboard";
+    };
+  };
+  
+  programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      vscodevim.vim
+      jdinhlife.gruvbox
+      ms-toolsai.jupyter
+      ms-python.python
+      ms-vscode.cpptools
+      bbenoist.nix
+    ];
   };
 
   home.stateVersion = "22.11";

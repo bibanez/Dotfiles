@@ -7,5 +7,5 @@ op=$(for i in $(ls -dX $SUBJECTSDIR/*/); do echo ${${i%%/}/*\//}; done | fuzzel 
 if [[ -n $op ]];
 then
         ln -vfns $SUBJECTSDIR/$op $HOME/Current
-        nemo $HOME/Current
+        thunar $HOME/Current
 fi

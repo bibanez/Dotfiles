@@ -1,5 +1,9 @@
 { config, pkgs, lib, ... }:
 {
+  environment.systemPackages = with pkgs; [
+    syncthing
+  ];
+  
   services.syncthing = {
     enable = true;
     dataDir = "/home/bibanez";
@@ -20,6 +24,12 @@
       "Universitat" = {
         path = "/home/bibanez/Universitat";
         devices = [ "iPad" ];
+        id = "dlhva-snxn3";
+      };
+      "Llibreria" = {
+        path = "/home/bibanez/Llibreria";
+        devices = [ "iPad" ];
+        id = "gz4aq-4c6sf";
       };
     };
   };

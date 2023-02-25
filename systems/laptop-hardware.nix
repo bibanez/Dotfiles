@@ -4,11 +4,12 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
+  networking.hostName = "laptop";
+  
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
-
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
+ boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];

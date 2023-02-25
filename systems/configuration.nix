@@ -1,3 +1,4 @@
+
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
@@ -5,11 +6,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      #<home-manager/nixos>
-    ];
 
   # Nix flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -22,17 +18,10 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-
-  networking.hostName = "laptop"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   
   # Virtualisation
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "bibanez" ];
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -59,20 +48,15 @@
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
 
-  # Enable the KDE Plasma Desktop Environment.
-  #services.xserver.displayManager.sddm.enable = true;
-  #services.xserver.desktopManager.plasma5.enable = true;
-  #qt5.enable = true;
-  #qt5.platformTheme = "gtk2";
-  #qt5.style = "gtk2";
-  
+  # Qt
+  qt.enable = true;
+  qt.platformTheme = "gtk2";
+  qt.style = "gtk2";
+
   # Shell
   programs.zsh.enable = true;
   
-  # Sway general config
   security.polkit.enable = true;
-  xdg.portal.wlr.enable = true;
-  programs.sway.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -101,9 +85,6 @@
     pulse.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.defaultUserShell = pkgs.zsh;
   users.users.bibanez = {
@@ -115,74 +96,15 @@
   fonts.fonts = with pkgs; [
     font-awesome
   ];
-  
-  # Syncthing
-  services.syncthing = {
-    enable = true;
-    dataDir = "/home/bibanez";
-    openDefaultPorts = true;
-    configDir = "/home/bibanez/.config/syncthing";
-    user = "bibanez";
-    group = "users";
-    guiAddress = "0.0.0.0:8384";
-
-    overrideDevices = true;
-    overrideFolders = true;
-
-    devices = {
-      "iPad" = { id = "EZVOL7N-PPJGH6Q-3UDILET-UKK3RZF-Y32JKDR-BENNQSE-PAYJJPF-FFCXZQO"; }; 
-    };
-    
-    folders = {
-      "Universitat" = {
-        path = "/home/bibanez/Universitat";
-        devices = [ "iPad" ];
-        id = "dlhva-snxn3";
-      };
-      "Llibreria" = {
-        path = "/home/bibanez/Llibreria";
-        devices = [ "iPad" ];
-        id = "gz4aq-4c6sf";
-      };
-    };
-  };
-  # Home Manager
-  #home-manager.useGlobalPkgs = true;
-  #home-manager.users.bibanez = import ./home.nix;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     vim 
     wget
-    
-    syncthing
-
-    # Only laptop:
-    tlp
   ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -1,8 +1,6 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [ ./sway.nix ];
-
   home.packages = with pkgs; [
     # Terminal
     wezterm
@@ -34,16 +32,6 @@
     joplin
     joplin-desktop
     
-    # Desktop
-    sway
-    wl-clipboard
-    clipman
-    swaynotificationcenter
-    fuzzel
-    brightnessctl
-    playerctl
-    pavucontrol
-    networkmanagerapplet
   ];
   
   home.pointerCursor = {
